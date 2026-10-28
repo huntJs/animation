@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liquid Blob Portal</title>
+  <style>
+    :root {
+      --bg-a: #0b1018;
+      --bg-b: #1f0f24;
+      --warm: #ff8a4c;
+      --pink: #ff4fb6;
+      --cyan: #36ffe2;
+      --txt: #fff7ef;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      color: var(--txt);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255, 138, 76, 0.3), transparent 40%),
+        radial-gradient(circle at 85% 18%, rgba(54, 255, 226, 0.25), transparent 42%),
+        linear-gradient(150deg, var(--bg-a), var(--bg-b));
+    }
+
+    .blob-wrap {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      filter: url(#gooey) blur(1px);
+      pointer-events: none;
+    }
+
+    .blob {
+      position: absolute;
+      width: clamp(180px, 30vw, 420px);
+      aspect-ratio: 1;
+      border-radius: 40% 60% 55% 45% / 42% 50% 50% 58%;
+      mix-blend-mode: screen;
+      opacity: 0.9;
+    }
+
+    .blob.a {
+      background: radial-gradient(circle at 30% 30%, #ffffff, var(--pink) 40%, transparent 70%);
+      animation: morphA 8s ease-in-out infinite alternate;
+    }
+
+    .blob.b {
+      background: radial-gradient(circle at 70% 30%, #ffffff, var(--cyan) 38%, transparent 72%);
+      animation: morphB 10s ease-in-out infinite alternate;
+    }
+
+    .blob.c {
+      background: radial-gradient(circle at 45% 65%, #fff1d2, var(--warm) 42%, transparent 73%);
+      animation: morphC 9s ease-in-out infinite alternate;
+    }
+
+    .rings {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, transparent 38%, rgba(255, 255, 255, 0.06) 39%, transparent 40%),
+        radial-gradient(circle at center, transparent 52%, rgba(255, 255, 255, 0.06) 53%, transparent 54%),
+        radial-gradient(circle at center, transparent 67%, rgba(255, 255, 255, 0.05) 68%, transparent 69%);
+      animation: breathe 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: min(900px, 90vw);
+      padding: 2rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 7vw, 5rem);
+      line-height: 1.08;
+      text-transform: uppercase;
+      text-shadow: 0 0 35px rgba(255, 79, 182, 0.35);
+    }
+
+    p {
+      margin: 1rem auto 0;
+      max-width: 640px;
+      line-height: 1.65;
+      color: rgba(255, 247, 239, 0.86);
+    }
+
+    @keyframes morphA {
+      0% {
+        transform: translate(-26vw, -6vh) scale(0.9) rotate(0deg);
+        border-radius: 40% 60% 55% 45% / 42% 50% 50% 58%;
+      }
+      100% {
+        transform: translate(12vw, 9vh) scale(1.2) rotate(130deg);
+        border-radius: 65% 35% 43% 57% / 35% 63% 37% 65%;
+      }
+    }
+
+    @keyframes morphB {
+      0% {
+        transform: translate(18vw, -10vh) scale(1.15) rotate(25deg);
+        border-radius: 57% 43% 60% 40% / 53% 40% 60% 47%;
+      }
+      100% {
+        transform: translate(-16vw, 14vh) scale(0.95) rotate(-110deg);
+        border-radius: 35% 65% 50% 50% / 62% 41% 59% 38%;
+      }
+    }
+
+    @keyframes morphC {
+      0% {
+        transform: translate(-6vw, 15vh) scale(0.95) rotate(-35deg);
+        border-radius: 52% 48% 30% 70% / 48% 62% 38% 52%;
+      }
+      100% {
+        transform: translate(8vw, -14vh) scale(1.15) rotate(95deg);
+        border-radius: 43% 57% 66% 34% / 66% 36% 64% 34%;
+      }
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); opacity: 0.65; }
+      50% { transform: scale(1.05); opacity: 1; }
+    }
+
+    @media (max-width: 700px) {
+      .blob { width: 52vw; }
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="gooey">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur" />
+        <feColorMatrix
+          in="blur"
+          mode="matrix"
+          values="1 0 0 0 0
+                  0 1 0 0 0
+                  0 0 1 0 0
+                  0 0 0 26 -12"
+          result="goo"
+        />
+        <feBlend in="SourceGraphic" in2="goo" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="blob-wrap">
+    <div class="blob a"></div>
+    <div class="blob b"></div>
+    <div class="blob c"></div>
+  </div>
+  <div class="rings"></div>
+
+  <main class="hero">
+    <h1>Liquid Portal Intro</h1>
+    <p>
+      Morphing gooey gradients create an energetic visual system that feels alive,
+      perfect for launching products, events, or high-impact brand stories.
+    </p>
+  </main>
+</body>
+</html>
